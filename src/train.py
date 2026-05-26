@@ -7,6 +7,8 @@ from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 from modeling import find_threshold, calc_model_metrics
 import matplotlib.pyplot as plt
+import joblib
+import json
 from sklearn.metrics import (recall_score, classification_report, confusion_matrix, 
                              ConfusionMatrixDisplay)
 
@@ -51,6 +53,8 @@ def main():
     )
 
     evaluate(y_pred=y_pred_final, y_test=y_test)
+
+    save_model(model=model, threshold=best_threshold)
 
 def evaluate(y_pred, y_test):
     print(classification_report(y_true=y_test, y_pred=y_pred))
@@ -132,6 +136,24 @@ def apply_threshold(probs, minor_idx, best_t):
     y_pred_final[minor_probs > best_t] = 0
 
     return y_pred_final
+
+def save_model(model, threshold):
+    base_dir = Path(__file__).resolve().parent.parent
+    ARTIFACTS_DIR = base_dir / "artifacts"
+    MODEL_PATH = ARTIFACTS_DIR / "model.pkl"
+    THRESHOLD_PATH = ARTIFACTS_DIR / "best_threshold.json"
+
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    joblib.dump(model, MODEL_PATH)
+
+    with open(THRESHOLD_PATH, 'w') as f:
+        json.dump({
+            "threshold": threshold
+        }, f)
+
+    print(f"model saved: {MODEL_PATH}")
+
 
 if __name__ == "__main__":
     main()
