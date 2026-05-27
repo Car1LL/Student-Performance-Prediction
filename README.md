@@ -45,4 +45,60 @@ Based on the class imbalance and EDA, the minority class `C` was chosen to be a 
 `CatBoost` showed the best overall results on all classes. Also **threshold** tuning was performed to increase recall for the minority class.
 
 
+## Project Structure
 
+    .
+    ├── app
+    │   ├── main.py
+    │   ├── model.py
+    │   └── schemas.py
+    ├── artifacts
+    │   ├── best_threshold.json
+    │   └── model.pkl
+    ├── dataset
+    │   └── student
+    │       ├── student-mat.csv
+    │       ├── student-merge.R
+    │       ├── student-por.csv
+    │       └── student.txt
+    ├── LICENSE
+    ├── notebooks
+    │   ├── 01_EDA.ipynb
+    │   └── 02_Modeling.ipynb
+    ├── README.md
+    ├── requirements.txt
+    └── src
+        ├── modeling.py
+        ├── preprocessing.py
+        └── train.py
+
+## Installation
+
+Before continue make sure you downloaded the dataset from the [website](https://archive.ics.uci.edu/dataset/320/student+performance). Unzip it, create `./dataset/` directory and place it in there. Follow project structure from above to make sure you did it correctly.
+
+    git clone https://github.com/Car1LL/Student-Performance-Prediction.git
+    cd student-performance-prediction
+    pip install -r requirements.txt
+
+## Using FastAPI prediction
+
+Open root directory of the project, then in terminal:
+
+    uvicorn app.main:app --reload
+
+Then follow the link - http://127.0.0.1:8000/docs
+
+## Jupyter Notebook
+
+To inspect Exploratory Data Analysis and Modeling notebooks, open `./notebooks/`, and then in terminal:
+
+    jupyter lab
+
+## Results
+
+* Final selected model: `CatBoost`
+* Optimized for: `recall macro` (minority class)
+* Threshold tuning was performed
+* Training pipeline including threshold tuning was saved in `./src/train.py`
+* Model and threshold were saved to `./artifacts/`
+* FastAPI service was implemented to `./app/`

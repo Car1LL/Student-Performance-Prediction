@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 import pandas as pd
-import src.preprocessing as preprocessing
 from app.model import model, threshold, MINOR_CLASS
 from app.schemas import Student
 

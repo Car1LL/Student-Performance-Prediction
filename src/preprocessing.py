@@ -2,10 +2,7 @@ import pandas as pd
 from typing import Tuple
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.base import BaseEstimator
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV
-from xgboost import XGBClassifier
+
 
 def create_class_target_variable(df: pd.DataFrame) -> pd.DataFrame:
     """
