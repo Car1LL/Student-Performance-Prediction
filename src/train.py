@@ -38,9 +38,7 @@ def main():
     )
 
     model = train_model(weights=weights)
-
     model.fit(train_pool)
-
     best_threshold = find_best_threshold(model, X_test, y_test)
 
     probs = model.predict_proba(X_test)
